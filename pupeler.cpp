@@ -28,7 +28,7 @@ std::string output = config.at("outputs").at("pupeler").get<std::string>();
 
         for (int i=0; i<steps; i++){
             dx=dt*v_i;
-            dv=-dt*w*w*x_i-k*v_i;
+            dv=-dt*(w*w*x_i+k*v_i);
 
             x_i=x_i+dx;
             v_i=v_i+dv;

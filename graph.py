@@ -34,45 +34,92 @@ t2, x2, v2, E2 = run_simulation(executable_2)
 
 t3, x3, v3, E3 = run_simulation(executable_3)
 
+show_methods = {"rk4"}
+
 
 fig, ax = plt.subplots(nrows=4, ncols=1, figsize=(8, 10))
 
+methods = {
+    "euler": {
+        "name": "Эйлер",
+        "t": t1,
+        "x": x1,
+        "v": v1,
+        "E": E1,
+        "color": "blue",
+        "linestyle": "-"
+    },
+    "heun": {
+        "name": "Хойн",
+        "t": t2,
+        "x": x2,
+        "v": v2,
+        "E": E2,
+        "color": "orange",
+        "linestyle": "--"
+    },
+    "rk4": {
+        "name": "Рунге — Кутта",
+        "t": t3,
+        "x": x3,
+        "v": v3,
+        "E": E3,
+        "color": "green",
+        "linestyle": "-"
+    }
+}
 
-ax[0].plot(t1, x1, label='Эйлер (X)', color='blue')
-ax[0].plot(t2, x2, label='Хойн (X)', color='orange', linestyle='--')
-ax[0].plot(t3, x3, label='Рунге (X)', color='green')
-ax[0].set_title('Сравнение координаты X(t)', fontsize=12)
-ax[0].set_xlabel('t, c')
-ax[0].set_ylabel('x, м')
-ax[0].legend()
-ax[0].grid(True)
+# Какие данные отображать на каждом графике
+plots = [
+    (ax[0], "t", "x", "X"),
+    (ax[1], "t", "v", "V"),
+    (ax[2], "t", "E", "E"),
+    (ax[3], "x", "v", None)
+]
 
-ax[1].plot(t1, v1, label='Эйлер (V)', color='blue')
-ax[1].plot(t2, v2, label='Хойн (V)', color='orange', linestyle='--')
-ax[1].plot(t3, v3, label='Рунге (X)', color='green')
-ax[1].set_title('Сравнение скорости V(t)', fontsize=12)
-ax[1].set_xlabel('t, c')
-ax[1].set_ylabel('v, м/с')
-ax[1].legend()
-ax[1].grid(True)
+for axis, x_key, y_key, suffix in plots:
 
-'''
-ax[2].plot(t1, E1, label='Эйлер (E)', color='blue')
-ax[2].plot(t2, E2, label='Хойн (E)', color='orange', linestyle='--')
-'''
-ax[2].plot(t3, E3, label='Рунге (X)', color='green')
-ax[2].set_title('Сравнение энергии E(t)', fontsize=12)
-ax[2].set_xlabel('t, c')
-ax[2].set_ylabel('E, Дж')
-ax[2].legend()
-ax[2].grid(True)
+    for key, method in methods.items():
 
-ax[3].plot(x1, v1, label='Эйлер', color='blue')
-ax[3].plot(x2, v2, label='Хойн', color='orange', linestyle='--')
-ax[3].plot(x3, v3, label='Рунге (X)', color='green')
-ax[3].set_title('Фаз диограммы', fontsize=12)
-ax[3].legend()
-ax[3].grid(True)
+        if key not in show_methods:
+            continue
+
+        label = method["name"]
+
+        if suffix is not None:
+            label += f" ({suffix})"
+
+        axis.plot(
+            method[x_key],
+            method[y_key],
+            label=label,
+            color=method["color"],
+            linestyle=method["linestyle"]
+        )
+
+    axis.legend()
+    axis.grid(True)
+
+
+# Настройки координаты
+ax[0].set_title("Сравнение координаты X(t)")
+ax[0].set_xlabel("t, с")
+ax[0].set_ylabel("x, м")
+
+# Настройки скорости
+ax[1].set_title("Сравнение скорости V(t)")
+ax[1].set_xlabel("t, с")
+ax[1].set_ylabel("v, м/с")
+
+# Настройки энергии
+ax[2].set_title("Сравнение энергии E(t)")
+ax[2].set_xlabel("t, с")
+ax[2].set_ylabel("E, Дж")
+
+# Настройки фазовой диаграммы
+ax[3].set_title("Фазовая диаграмма")
+ax[3].set_xlabel("x, м")
+ax[3].set_ylabel("v, м/с")
 
 plt.tight_layout()
 plt.show()
