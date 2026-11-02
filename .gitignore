@@ -1,0 +1,14 @@
+cat > .gitignore <<'EOF'
+# служебные файлы ОС
+.DS_Store
+Thumbs.db
+
+# окружения и зависимости
+venv/
+__pycache__/
+node_modules/
+
+# секреты — НИКОГДА не коммитим
+.env
+*.key
+EOF
