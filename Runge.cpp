@@ -13,6 +13,7 @@ json config = json::parse(file);
 double x_0 = config.at("x0").get<double>();
 double v_0 = config.at("v0").get<double>();
 double w = config.at("omega").get<double>();
+double k = config.at("decr").get<double>();
 double dt = config.at("dt").get<double>();
 int steps = config.at("steps").get<int>();
 std::string output = config.at("outputs").at("runge").get<std::string>();
@@ -38,13 +39,13 @@ std::string output = config.at("outputs").at("runge").get<std::string>();
 
     for (int i=0; i<steps; i++){
         k1x=dt*(v_i);
-        k1v=dt*(-w*w*x_i);
+        k1v=dt*(-w*w*x_i-k*v_i);
         k2x=dt*(v_i+k1v/2);
-        k2v=dt*(-w*w*(x_i+k1x/2));
-        k3x=dt*(v_i+k1v/2);
-        k3v=dt*(-w*w*(x_i+k2x/2));
+        k2v=dt*(-w*w*(x_i+k1x/2)-k*(v_i+k1v/2));
+        k3x=dt*(v_i+k2v/2);
+        k3v=dt*(-w*w*(x_i+k2x/2)-k*(v_i+k2v/2));
         k4x=dt*(v_i+k3v);
-        k4v=dt*(-w*w*(x_i+k3x));
+        k4v=dt*(-w*w*(x_i+k3x)-k*(v_i+k3v));
 
         x_i=x_i+(k1x+2*k2x+2*k3x+k4x)/6;
 

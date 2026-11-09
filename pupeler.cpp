@@ -13,6 +13,7 @@ json config = json::parse(file);
 double x_0 = config.at("x0").get<double>();
 double v_0 = config.at("v0").get<double>();
 double w = config.at("omega").get<double>();
+double k = config.at("decr").get<double>();
 double dt = config.at("dt").get<double>();
 int steps = config.at("steps").get<int>();
 std::string output = config.at("outputs").at("pupeler").get<std::string>();
@@ -27,7 +28,7 @@ std::string output = config.at("outputs").at("pupeler").get<std::string>();
 
         for (int i=0; i<steps; i++){
             dx=dt*v_i;
-            dv=-dt*w*w*x_i;
+            dv=-dt*(w*w*x_i+k*v_i);
 
             x_i=x_i+dx;
             v_i=v_i+dv;
