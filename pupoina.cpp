@@ -16,7 +16,7 @@ double w = config.at("omega").get<double>();
 double k = config.at("decr").get<double>();
 double dt = config.at("dt").get<double>();
 int steps = config.at("steps").get<int>();
-std::string output = config.at("outputs").at("puзoina").get<std::string>();
+std::string output = config.at("outputs").at("pupoina").get<std::string>();
    
     float x_i=x_0;
     float v_i=v_0;

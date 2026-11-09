@@ -2,9 +2,9 @@
 {
     "x0": 1.0,
     "v0": 0.0,
-    "omega": 10.0,
-    "decr": 5,
-    "dt": 0.01,
+    "omega": 20,
+    "decr": 0.1,
+    "dt": 0.00001,
     "steps": 100000,
     "outputs": {
         "pupeler": "results/euler.csv",

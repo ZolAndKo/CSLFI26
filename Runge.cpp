@@ -39,7 +39,7 @@ std::string output = config.at("outputs").at("runge").get<std::string>();
 
     for (int i=0; i<steps; i++){
         k1x=dt*(v_i);
-        k1v=dt*(-w*w*x_i+k*v_i);
+        k1v=dt*(-w*w*x_i-k*v_i);
         k2x=dt*(v_i+k1v/2);
         k2v=dt*(-w*w*(x_i+k1x/2)-k*(v_i+k1v/2));
         k3x=dt*(v_i+k2v/2);
